@@ -7156,15 +7156,17 @@ spectro3D<-function(
         Zlen <- Zlim[2] - Zlim[1] + 1
         colorlut <- palette(Zlen)
         col <- colorlut[Z - Zlim[1] + 1]
-        rgl::rgl.clear()
-        rgl::rgl.bbox(color = "white", emission = "gray8", specular = "gray",
+        rgl::clear3d()
+        rgl::par3d(FOV = 90)
+        rgl::bg3d("gray30")
+        rgl::bbox3d(color = "white", emission = "gray8", specular = "gray",
                       shininess = 50, alpha = 0.8, xat = Yat, xlab = Ylab,
-                      xunit = 0, yat = Zat, ylab = Zlab, yunit = 0, zat = Xat,
-                      zlab = Xlab, zunit = 0)
-        rgl::rgl.texts(x = 1, z = magt * ncol(Z)/2, y = min(Z), text = "Time (s)", color = "white")
-        rgl::rgl.texts(z = 1, x = magf * nrow(Z)/2, y = min(Z), text = "Frequency (kHz)", color = "white")
-        rgl::rgl.texts(x = 1, z = 0, y = 0, text = "Amplitude (dB)", color = "white")
-        rgl::rgl.surface(Y, X, Z, color = col, back = "lines")
+                      xunit = 0, yat = Xat, ylab = Xlab, yunit = 0, zat = Zat,
+                      zlab = Zlab, zunit = 0)
+        rgl::text3d(x = 1, y = magt * ncol(Z)/2, z = min(Z), text = "Time (s)", color = "white")
+        rgl::text3d(y = 1, x = magf * nrow(Z)/2, z = min(Z), text = "Frequency (kHz)", color = "white")
+        rgl::text3d(y = 1, x = 0, z = 0, text = "Amplitude (dB)", color = "white")
+        rgl::surface3d(Y, X, Z, color = col, back = "lines")
         invisible(list(time=seq(0,n/f,length.out=length(step)), freq=F, amp=z))
     }
     else return(list(time=seq(0,n/f,length.out=length(step)), freq=F, amp=z))
